@@ -275,7 +275,443 @@ function mirrorArray(array) {
   return mirrored;
 }
 
-console.log(mirrorArray([1,2,3]));
-  // => [ 1, 2, 3, 3, 2, 1 ]
-console.log(mirrorArray(['a', 'b', 'c', 'd']));
+// console.log(mirrorArray([1,2,3]));
+   // => [ 1, 2, 3, 3, 2, 1 ]
+// console.log(mirrorArray(['a', 'b', 'c', 'd']));
   // => [ 'a', 'b', 'c', 'd', 'd', 'c', 'b', 'a' ]
+
+  /*
+abbreviate
+Write a function abbreviate(sentence) that takes in a sentence string and returns a new sentence where words longer than 4 characters have their vowels removed. Assume the sentence has all lowercase characters. Feel free to use the array below in your solution: const vowels = ['a', 'e', 'i', 'o', 'u'];
+
+Examples:
+
+abbreviate('the bootcamp is fun'); // => 'the btcmp is fun'
+abbreviate('programming is fantastic'); // => 'prgrmmng is fntstc'
+abbreviate('hello world'); // => 'hll wrld'
+abbreviate('how are you'); // => 'how are you'
+  */
+
+const vowels = ['a', 'e', 'i', 'o', 'u'];
+
+function removeVowels(word) {
+  if (word.length < 4) {return word;}
+
+  let letters = word.split("");
+
+  let noVowels = "";
+  letters.forEach(
+    letter => {
+      if (!vowels.includes(letter)) {
+      noVowels += letter;
+      }
+    }
+  );
+
+  return noVowels;
+}
+
+function abbreviate(sentence) {
+  let words = sentence.split(" ");
+  let removed = "";
+  words.forEach(
+    word => {
+      removed += ` ${removeVowels(word)}`
+    }
+  );
+
+  console.log(removed);
+}
+
+// abbreviate('the bootcamp is fun'); // => 'the btcmp is fun'
+// abbreviate('programming is fantastic'); // => 'prgrmmng is fntstc'
+// abbreviate('hello world'); // => 'hll wrld'
+// abbreviate('how are you'); // => 'how are you'
+
+/*
+adults
+Write a function adults(people) that takes in an array of person objects. The function should return an array containing the names of those who have an age of 18 or higher.
+
+Example:
+
+adults
+Write a function adults(people) that takes in an array of person objects. The function should return an array containing the names of those who have an age of 18 or higher.
+
+Example:
+
+const ppl = [
+  {name: 'John', age: 20},
+  {name: 'Jim', age: 13},
+  {name: 'Jane', age: 18},
+  {name: 'Bob', age: 7}
+];
+
+adults(ppl); // => [ 'John', 'Jane' ]
+*/
+
+function isAdult(person) {
+  return person.age >= 18;
+}
+
+function adults(people) {
+  let adults = [];
+  people.forEach(
+    person => {
+      if (isAdult(person)) {
+        adults.push(person.name);
+      }
+    }
+  );
+  return adults;
+}
+
+let ppl = [
+  {name: 'John', age: 20},
+  {name: 'Jim', age: 13},
+  {name: 'Jane', age: 18},
+  {name: 'Bob', age: 7}
+];
+
+//console.log(adults(ppl)); // => [ 'John', 'Jane' ]
+
+/*
+countScores
+Write a function countScores(people) that takes in an array of score objects, people, as its input. A score object, people, has two key-value pairs: a name (string) and a score (number). countScores(people) should return an object that has key-value pairs where each name is a key and the value is their total score.
+*/
+
+function countScores(people) {
+  let scores = {};
+  people.forEach(
+    person => {
+      if (scores[person.name]) {
+        scores[person.name] += person.score;
+      } else {
+        scores[person.name] = person.score;
+      }
+    }
+  );
+
+  console.log(scores);
+  return scores;
+}
+
+// Example 1:
+var ppl1 = [
+  { name: "Anthony", score: 10 },
+  { name: "Fred", score : 10 },
+  { name: "Anthony", score: -8 },
+  { name: "Winnie", score: 12 }
+];
+//countScores(ppl1); // => { Anthony: 2, Fred: 10, Winnie: 12 }
+
+// Example 2
+var peeps1 = [
+  { name: "Anthony", score: 2 },
+  { name: "Winnie", score: 2 },
+  { name: "Fred", score: 2 },
+  { name: "Winnie", score: 2 },
+  { name: "Fred", score: 2 },
+  { name: "Anthony", score: 2 },
+  { name: "Winnie", score: 2 }
+];
+
+//countScores(peeps1); // => { Anthony: 4, Fred: 4, Winnie: 6 }
+
+/*
+firstNPrimes
+Using the isPrime function you made, write a function firstNPrimes(n) that returns an array of the first n prime numbers.
+
+Examples:
+
+firstNPrimes(0);  // => []
+firstNPrimes(1);  // => [2]
+firstNPrimes(4);  // => [2, 3, 5, 7]
+*/
+
+function isPrime(number) {
+  let prime = true;
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) {
+      prime = false;
+    }
+  }
+  return prime;
+}
+
+//console.log(isPrime(4));
+
+function firstNPrimes(n) {
+  let primes = [];
+  let current = 2;
+  while (primes.length < n) {
+    if (isPrime(current)) {primes.push(current);}
+    current++;
+  }
+
+  console.log(primes);
+  return  primes;
+}
+
+// firstNPrimes(0);  // => []
+// firstNPrimes(1);  // => [2]
+// firstNPrimes(4);  // => [2, 3, 5, 7]
+
+/*
+peakFinder
+Write a function peakFinder(array) that takes in an array of numbers. It should return an array containing the indices of all the peaks. A peak is an element that is greater than both of its neighbors. If it is the first or last element, it is a peak if it is greater than its one neighbor. Assume the array has a length of at least 2.
+
+Examples:
+
+peakFinder([1, 2, 3, 2, 1]); // => [2]
+peakFinder([2, 1, 2, 3, 4, 5]); // => [0, 5]
+peakFinder([4, 6, 9, 4, 2, -7, 2, -4, 5]); // => [2, 6, 8]
+*/
+
+function peakFinder(array) {
+  //iterate over the array
+   //compare the element to i-1 and i+1
+   //if greater than both, push the index to result array
+   //if i-1 or i+1 does not exist, use negative infinity
+
+   let peaks = [];
+   for (let i = 0; i < array.length; i++) {
+    let current = array[i];
+    let previous = array[i-1] || Number.NEGATIVE_INFINITY;
+    let next = array[i+1] || Number.NEGATIVE_INFINITY;
+    if (current > previous && current > next) {
+      peaks.push(i);
+    }
+   }
+
+   console.log(peaks);
+   return peaks;
+}
+
+// peakFinder([1, 2, 3, 2, 1]); // => [2]
+// peakFinder([2, 1, 2, 3, 4, 5]); // => [0, 5]
+// peakFinder([4, 6, 9, 4, 2, -7, 2, -4, 5]); // => [2, 6, 8]
+
+/*
+divisibleByThreePairSum
+Write a function divisibleByThreePairSum(array) that takes an array of numbers. It should return an array of all the pairs of indices, whose elements sum to a multiple of three.
+
+Examples:
+
+const arr1 = divisibleByThreePairSum([1, 6, 3, 4, 2, 0]);
+arr1 // => [[0, 4], [1, 2], [1, 5], [2, 5], [3, 4]]
+
+const arr2 = divisibleByThreePairSum([8, 3, 5, 9, 2]);
+arr2 // => [[1, 3]]
+
+*/
+
+function sumToMultipleofThree(num1, num2) {
+  return (num1+num2) % 3 === 0
+}
+
+function divisibleByThreePairSum(array) {
+ let pairs = [];
+ for (let i = 0; i < array.length - 1; i++) {
+  for (let j = i + 1; j < array.length; j++) {
+    if (sumToMultipleofThree(array[i], array[j])) {
+      pairs.push([i, j]);
+    }
+  }
+ }
+ console.log(pairs);
+}
+
+// divisibleByThreePairSum([1, 6, 3, 4, 2, 0]);
+//arr1 // => [[0, 4], [1, 2], [1, 5], [2, 5], [3, 4]]
+
+// divisibleByThreePairSum([8, 3, 5, 9, 2]);
+//arr2 // => [[1, 3]]
+
+/*
+zipArray
+Write a function zipArray(arr1, arr2) that takes in two arrays and "zips" them together by returning a single 2D-array. Assume that both input arrays have the same length.
+
+Examples:
+
+const a1 = ['a', 'b', 'c', 'd'];
+const a2 = [10, 20, 30, 40];
+
+const result = zipArray(a1, a2);
+result; // => [ [ 'a', 10 ], [ 'b', 20 ], [ 'c', 30 ], [ 'd', 40 ] ]
+*/
+
+function zipArray(a1, a2) {
+  let a3 = a1.map(
+    (element, index) => [element, a2[index]]
+  );
+
+  console.log(a3);
+}
+
+const a1 = ['a', 'b', 'c', 'd'];
+const a2 = [10, 20, 30, 40];
+// zipArray(a1, a2);
+
+
+/*
+twoDimensionalTotal
+Write a function twoDimensionalTotal(array) that takes in a 2D array of numbers and returns the total sum of all elements.
+
+*/
+
+function sumArray(array) {
+  return array.reduce(
+    (total, element) => total + element
+  );
+}
+
+function twoDimensionalTotal(array) {
+  let total = array.reduce(
+    (sum, subArray) => {
+      return sum + subArray.reduce(
+        (sum, element) => sum + element
+      );
+    }
+  , 0
+  );
+
+  console.log(total);
+}
+
+const arr1 = [
+  [5, 2, 5, 3],
+  [12, 13],
+];
+
+//twoDimensionalTotal(arr1);  // => 40
+
+const arr2 = [
+  [2],
+  [1, 9],
+  [1, 1, 1]
+]
+
+//twoDimensionalTotal(arr2);  // => 15
+
+/*
+countInnerElement
+Write a function countInnerElement(arr) that takes in a 2-D array of elements. Each element of arr is a sub array that contains multiple elements. The number of elements contained in each sub array are not the same. You can assume each sub array contains at least one element. You should return an object that counts how many times each element in each sub array repeats.
+
+*/
+
+function countInnerElement(arr) {
+  let counts = {};
+  arr.forEach(
+    subArray => {
+      subArray.forEach(
+        element => {
+          if (counts[element]) {
+            counts[element]++;
+          } else {
+            counts[element] = 1;
+          }
+        }
+      );
+    }
+  );
+
+  console.log(counts);
+}
+
+const arr15 = [
+  [1, 2, 4, 5],
+  [2, 7, 4],
+  [1, 4, 5, 2, 7]
+]
+
+//countInnerElement(arr15)  // => {1: 2, 2: 3, 4: 3, 5: 2, 7: 2}
+
+const arr21 = [
+  ['a','b','c','d'],
+  ['a','b'],
+  ['a','c','d','a']
+]
+
+//countInnerElement(arr21)  // => {a: 4, b: 2, c: 2, d: 2}
+
+/*
+twoDiff
+Write a function twoDiff(array), given an array of numbers, return a 2-D array, where each of the sub array are indices of the two numbers such that their difference is 2. If there are no such numbers, return an empty array.
+
+NOTE: The pairs are unique. HINT: Account for negative difference too!
+
+*/
+
+function twoDiff(array) {
+  let result = [];
+  for (let i = 0; i < array.length - 1; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      if (Math.abs(array[i] - array[j]) === 2) {
+        result.push([i, j]);
+      }
+    }
+  }
+  console.log(result);
+}
+
+// twoDiff([2, 3, 4, 6, 1, 7])  // => [[0, 2], [1, 4], [2, 3]]
+// twoDiff([0, 2, 4, 3, 5])  // => [[0, 1], [1, 2], [3,4]]
+// twoDiff([])  // => []
+
+/*
+arrayDiff
+Write a function arrayDiff(arr1, arr2) that takes in two arrays. The function should return a new array, containing the elements of arr1 that are not also in arr2.
+
+Note: Assume both arrays have unique elements.
+
+*/
+
+function arrayDiffFilter(a1, a2) {
+
+  let start = new Date();
+
+  let result = a1.filter(
+    element => !a2.includes(element)
+  );
+
+
+  let end = new Date();
+  console.log(end-start);
+  console.log(result);
+}
+
+function arrayDiffObject(a1, a2) {
+
+  let start = new Date();
+
+  let uniques = [];
+
+  let values = {};
+  a2.forEach(
+    element => values[element] = element
+  );
+  a1.forEach(
+    element => {
+      if (values[element] === undefined) {
+      uniques.push(element);
+      }
+    }
+  );
+  let end = new Date();
+  console.log(end - start);
+  console.log(uniques);
+}
+
+const array1 = [1, 23, 2, 43, 3, 4]
+const array2 = [3, 23]
+for (let i = 50; i < 100000; i++) {
+  array1.push(i);
+  array2.push(i);
+}
+// arrayDiffObject(array1, array2)  // => [1, 2, 43 ,4]
+// arrayDiffFilter(array1, array2)
+
+// const array3 = ['a', 'ab', 'c', 'd', 'c']
+// const array4 = ['d']
+// arrayDiffFilter(array3, array4)  // => ['a', 'ab', 'c', 'c']
+// arrayDiffObject(array3, array4)
